@@ -80,8 +80,9 @@ public class MemberControllerImpl    implements MemberController{
 	@RequestMapping(value = "/member/memberForm.do", method = RequestMethod.GET)
 	public ModelAndView memberForm(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String viewName=getViewName(request);
-		System.out.println(viewName);
+		System.out.println("뷰네임"+viewName);
 		ModelAndView mav= new ModelAndView(viewName);
+		
 		
 		return mav;
 	}
