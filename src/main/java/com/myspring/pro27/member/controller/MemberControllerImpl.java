@@ -46,7 +46,9 @@ public class MemberControllerImpl    implements MemberController{
 
 	@RequestMapping(value = "/member/loginForm.do", method = RequestMethod.GET)
 	public ModelAndView loginForm(@RequestParam(value= "result", required=false) String result,HttpServletRequest request, HttpServletResponse response) throws Exception{
-		String viewName=getViewName(request);
+		//String viewName=getViewName(request);
+		
+		String viewName=(String) request.getAttribute("viewName");
 		logger.info("뷰네임" + viewName);
 		ModelAndView mav= new ModelAndView(viewName);
 		
@@ -62,7 +64,10 @@ public class MemberControllerImpl    implements MemberController{
 	@Override
 	@RequestMapping(value = "/member/listMembers.do", method = RequestMethod.GET)
 	public ModelAndView listMembers(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String viewName=getViewName(request);
+		//String viewName=getViewName(request);
+		
+		String viewName=(String) request.getAttribute("viewName");
+		logger.info("인터셉터에서 넘어온 뷰네임" + viewName);
 		List<MemberVO> membersList = memberService.listMembers();
 		
 		ModelAndView mav= new ModelAndView(viewName);
@@ -79,7 +84,8 @@ public class MemberControllerImpl    implements MemberController{
 	
 	@RequestMapping(value = "/member/memberForm.do", method = RequestMethod.GET)
 	public ModelAndView memberForm(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		String viewName=getViewName(request);
+		//String viewName=getViewName(request);
+		String viewName=(String) request.getAttribute("viewName");
 		System.out.println("뷰네임"+viewName);
 		ModelAndView mav= new ModelAndView(viewName);
 		
@@ -197,56 +203,56 @@ public class MemberControllerImpl    implements MemberController{
 	
 	
 	
-	private String getViewName(HttpServletRequest request) throws Exception{
-		String contextPath = request.getContextPath();
-		
-		System.out.println("컨텍스트 경로 : " + contextPath);
-		String uri=(String) request.getAttribute("javax.servlet.include.request_uri");
-		System.out.println(uri);
-		if(uri ==null || uri.trim().equals("")) {
-			uri=request.getRequestURI();
-			System.out.println("요청하는 uri:" + uri);
-		}
-		
-		System.out.println("컨텍스트패스 길이:" + contextPath.length());
-		
-		int begin=0;  // 시작 위치
-		
-		if((contextPath != null) && ( ! ("".equals(contextPath)))) {
-			begin=contextPath.length();
-			System.out.println("시작위치:" + begin);
-		} 
-		
-		System.out.println();
-		
-		int end;
-		if(uri.indexOf(";") != -1) {
-			end=uri.indexOf(";");
-			System.out.println(end);
-		}else if(uri.indexOf("?") != -1) {
-			end=uri.indexOf("?");
-			System.out.println(end);
-		}else {
-			end=uri.length();
-			System.out.println("uri의 길이 :" + end);
-		}
-		
-		String fileName=uri.substring(begin, end);
-		System.out.println("중간 파일명: "+ fileName);
-		
-		
-		if(fileName.indexOf(".")  !=-1) {
-			fileName=fileName.substring(0, fileName.lastIndexOf("."));
-			System.out.println(fileName);
-		}
-		
-		if(fileName.lastIndexOf("/") != -1) {
-			fileName=fileName.substring(fileName.lastIndexOf("/", 1),fileName.length() );
-			System.out.println("최종 파일명 : "+ fileName);
-		}
-		
-		return fileName;
-	}
+//	private String getViewName(HttpServletRequest request) throws Exception{
+//		String contextPath = request.getContextPath();
+//		
+//		System.out.println("컨텍스트 경로 : " + contextPath);
+//		String uri=(String) request.getAttribute("javax.servlet.include.request_uri");
+//		System.out.println(uri);
+//		if(uri ==null || uri.trim().equals("")) {
+//			uri=request.getRequestURI();
+//			System.out.println("요청하는 uri:" + uri);
+//		}
+//		
+//		System.out.println("컨텍스트패스 길이:" + contextPath.length());
+//		
+//		int begin=0;  // 시작 위치
+//		
+//		if((contextPath != null) && ( ! ("".equals(contextPath)))) {
+//			begin=contextPath.length();
+//			System.out.println("시작위치:" + begin);
+//		} 
+//		
+//		System.out.println();
+//		
+//		int end;
+//		if(uri.indexOf(";") != -1) {
+//			end=uri.indexOf(";");
+//			System.out.println(end);
+//		}else if(uri.indexOf("?") != -1) {
+//			end=uri.indexOf("?");
+//			System.out.println(end);
+//		}else {
+//			end=uri.length();
+//			System.out.println("uri의 길이 :" + end);
+//		}
+//		
+//		String fileName=uri.substring(begin, end);
+//		System.out.println("중간 파일명: "+ fileName);
+//		
+//		
+//		if(fileName.indexOf(".")  !=-1) {
+//			fileName=fileName.substring(0, fileName.lastIndexOf("."));
+//			System.out.println(fileName);
+//		}
+//		
+//		if(fileName.lastIndexOf("/") != -1) {
+//			fileName=fileName.substring(fileName.lastIndexOf("/", 1),fileName.length() );
+//			System.out.println("최종 파일명 : "+ fileName);
+//		}
+//		
+//		return fileName;
+//	}
 
 
 
@@ -254,8 +260,10 @@ public class MemberControllerImpl    implements MemberController{
 	@Override
 	@RequestMapping(value = "/member/modMemberForm.do", method = RequestMethod.GET)
 	public ModelAndView modMemberForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String viewName=getViewName(request);
-		System.out.println(viewName);
+		//String viewName=getViewName(request);
+		String viewName=(String) request.getAttribute("viewName");
+		logger.info("인터셉터에서 넘어온 뷰네임" + viewName);
+		//System.out.println(viewName);
 		ModelAndView mav= new ModelAndView(viewName);
 		return mav;
 	}
